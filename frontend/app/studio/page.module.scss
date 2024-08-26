@@ -11,6 +11,7 @@
   .content_wrapper {
     padding-inline: Spacings.$spacing09;
     padding-block: Spacings.$spacing05;
-    overflow-y: scroll;
+    /* overflow-y: auto; */
+    height: 100%;
   }
 }
