@@ -16,10 +16,6 @@ import { Toolbar } from "./components/Toolbar/Toolbar";
 import { SearchBar } from "../ui/SearchBar/SearchBar";
 
 const defaultContent = `
-
-    <react-component>
-      <p>This is editable. You can create a new component by pressing Mod+Enter.</p>
-    </react-component>
     <h1>
       Hi there,
     </h1>
@@ -109,7 +105,7 @@ export const TextEditor = (): JSX.Element => {
   const [message, setMessage] = useState("");
   const { BrainMention, items } = useBrainMention();
 
-  const { messages, addQuestion, chatId } = useChat();
+  const { messages, chatId } = useChat();
 
   const router = useRouter();
 
