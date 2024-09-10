@@ -2657,10 +2657,10 @@
     "@tiptap/extension-text" "^2.6.6"
     "@tiptap/pm" "^2.6.6"
 
-"@tiptap/suggestion@2.1.12":
-  version "2.1.12"
-  resolved "https://registry.npmjs.org/@tiptap/suggestion/-/suggestion-2.1.12.tgz"
-  integrity sha512-rhlLWwVkOodBGRMK0mAmE34l2a+BqM2Y7q1ViuQRBhs/6sZ8d83O4hARHKVwqT5stY4i1l7d7PoemV3uAGI6+g==
+"@tiptap/suggestion@^2.6.6":
+  version "2.6.6"
+  resolved "https://registry.yarnpkg.com/@tiptap/suggestion/-/suggestion-2.6.6.tgz#acb07c410db862b58d9118199ef5ff53d3608fd6"
+  integrity sha512-jogG0QgGit9UtTznVnhQfNImZfQM89NR0is20yRQzC0HmD8B8f3jmGrotG63Why2oKbeoe3CpM5/5eDE/paqCA==
 
 "@tootallnate/once@2":
   version "2.0.0"

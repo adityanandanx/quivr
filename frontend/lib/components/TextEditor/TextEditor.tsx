@@ -3,6 +3,12 @@ import Focus from "@tiptap/extension-focus";
 import { Link } from "@tiptap/extension-link";
 import { EditorContent, useEditor } from "@tiptap/react";
 import { StarterKit } from "@tiptap/starter-kit";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+
+import { useBrainMention } from "@/app/chat/[chatId]/components/ActionsBar/components/ChatInput/components/ChatEditor/Editor/hooks/useBrainMention";
+import { useChatStateUpdater } from "@/app/chat/[chatId]/components/ActionsBar/components/ChatInput/components/ChatEditor/Editor/hooks/useChatStateUpdater";
+import { useChat } from "@/app/chat/[chatId]/hooks/useChat";
 
 import styles from "./TextEditor.module.scss";
 import { Toolbar } from "./components/Toolbar/Toolbar";
@@ -10,6 +16,10 @@ import { Toolbar } from "./components/Toolbar/Toolbar";
 import { SearchBar } from "../ui/SearchBar/SearchBar";
 
 const defaultContent = `
+
+    <react-component>
+      <p>This is editable. You can create a new component by pressing Mod+Enter.</p>
+    </react-component>
     <h1>
       Hi there,
     </h1>
@@ -95,21 +105,35 @@ const defaultContent = `
 `;
 
 export const TextEditor = (): JSX.Element => {
-  const editor = useEditor({
-    extensions: [
-      StarterKit.configure({}),
-      Focus.configure({
-        className: styles.has_focus,
-        mode: "shallowest",
-      }),
-      Link.configure({
-        openOnClick: false,
-      }),
-    ],
-    content: defaultContent,
-    immediatelyRender: false,
-    autofocus: true,
-  });
+  // const { currentBrain } = useBrainContext();
+  const [message, setMessage] = useState("");
+  const { BrainMention, items } = useBrainMention();
+
+  const { messages, addQuestion, chatId } = useChat();
+
+  const router = useRouter();
+
+  const editor = useEditor(
+    {
+      extensions: [
+        StarterKit.configure({}),
+        Focus.configure({
+          className: styles.has_focus,
+          mode: "shallowest",
+        }),
+        Link.configure({
+          openOnClick: false,
+        }),
+        BrainMention,
+      ],
+      content: defaultContent,
+      immediatelyRender: false,
+      autofocus: true,
+    },
+    [items.length]
+  );
+
+  useChatStateUpdater({ editor, setMessage });
 
   if (!editor) {
     return <></>;
@@ -118,11 +142,23 @@ export const TextEditor = (): JSX.Element => {
   return (
     <div>
       <div className={styles.editor_wrapper}>
+        <pre>{chatId}</pre>
+        <pre>{JSON.stringify(messages, null, 2)}</pre>
         <Toolbar editor={editor} />
         <EditorContent className={styles.content_wrapper} editor={editor} />
+        {/* <Editor message={message} setMessage={setMessage} onSubmit={() => ""} /> */}
       </div>
       <div className={styles.search_bar_wrapper}>
-        <SearchBar />
+        <SearchBar
+          onSearch={() => {
+            console.log("Hi");
+            console.log(chatId);
+            if (chatId) {
+              router.push(`/note/${chatId}`);
+            }
+          }}
+          redirect={false}
+        />
       </div>
     </div>
   );

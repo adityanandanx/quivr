@@ -16,9 +16,11 @@ import { LoaderIcon } from "../LoaderIcon/LoaderIcon";
 export const SearchBar = ({
   onSearch,
   newBrain,
+  redirect = true,
 }: {
   onSearch?: () => void;
   newBrain?: boolean;
+  redirect?: boolean;
 }): JSX.Element => {
   const [searching, setSearching] = useState(false);
   const [isDisabled, setIsDisabled] = useState(true);
@@ -49,7 +51,7 @@ export const SearchBar = ({
         if (onSearch) {
           onSearch();
         }
-        await addQuestion(message);
+        await addQuestion(message, () => "", redirect);
       } catch (error) {
         console.error(error);
       } finally {
